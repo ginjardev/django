@@ -18,3 +18,36 @@ ul{
 .site-header .navbar-nav .nav-link{
     color: #cbd5db;
 }
+nav{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+main{
+    margin-top: 3%;
+}
+.post-card{
+    box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2);
+    padding: 10px 20px;
+    margin-bottom: 10px;
+}
+.imgsize {
+    height: 200px;
+    width: 200px;
+}
+.profilecon {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 5%;
+}
+.profile{
+    padding: 8px;
+    width: 40%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.profile:hover{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
