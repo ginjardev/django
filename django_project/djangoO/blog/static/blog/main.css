@@ -2,7 +2,6 @@
     margin: 0;
 }
 body{
-    /* background: #fafafa; */
     color: #333333;
     /* margin-top: 5rem; */
 }
@@ -19,7 +18,9 @@ ul{
     color: #cbd5db;
 }
 nav{
+    background-color: rgb(74, 218, 218);
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    font-weight: bold;
 }
 main{
     margin-top: 3%;
