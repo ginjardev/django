@@ -29,6 +29,13 @@ main{
     box-shadow: 0 3px 6px 0 rgba(0,0,0,0.2);
     padding: 10px 20px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+}
+.image{
+    width: 15%;
 }
 .imgsize {
     height: 200px;
@@ -51,4 +58,8 @@ main{
 }
 .profile:hover{
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.img-size{
+    width: 60%;
+    height: 60%;
 }

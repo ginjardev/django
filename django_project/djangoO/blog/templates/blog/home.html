@@ -3,9 +3,14 @@
 {% block content %}
     {% for post in posts %}
         <div class="post-card">
-            <h2>{{ post.title}}</h2>
-            <h4>By {{ post.author }}, {{post.date_posted|date:"F d, Y"}}</h4>
-            <p>{{ post.content }}</p>
+           <div class="image">
+            <img class="rounded-circle img-size" src="{{ post.author.profile.image.url }}">
+           </div>
+            <article>
+                <h2>{{ post.title}}</h2>
+                <h4>By {{ post.author }}, {{post.date_posted|date:"F d, Y"}}</h4>
+                <p>{{ post.content }}</p>
+            </article>
         </div>
     {% endfor %}
 {% endblock content %}
