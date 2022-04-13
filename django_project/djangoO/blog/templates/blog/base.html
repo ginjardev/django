@@ -26,6 +26,7 @@
           <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
             <div class="navbar-nav ">
               {% if user.is_authenticated %}
+              <a class="nav-link" href="{% url 'post-create' %}">New Post</a>
               <a class="nav-link" href="{% url 'profile' %}">Profile</a>
                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
               {% else %}
