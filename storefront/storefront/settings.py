@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_s0!ar&ba12=@x)eocjzac_0+s&4i0r&irx5+x8tx8yrol$=q6'
+SECRET_KEY = 'django-insecure-z=2(ug8zx0#(z&fhlp48hd=@o$#nfnd(t-c7^t9p(&^*7(owi-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'playground',
     'debug_toolbar',
+    'playground',
     'store',
     'tags',
     'likes',
@@ -54,7 +54,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
-
 INTERNAL_IPS = [
     # ...
     "127.0.0.1",
@@ -79,7 +78,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'storefront.wsgi.application' 
+WSGI_APPLICATION = 'storefront.wsgi.application'
+
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

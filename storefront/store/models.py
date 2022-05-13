@@ -1,4 +1,3 @@
-from email.policy import default
 from django.db import models
 from django.forms import SlugField
 
@@ -72,4 +71,3 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField()
-
