@@ -12,7 +12,9 @@
     <h1>Hello World!</h1>
     {% endif %}
     <ul>
-      {{result}}
+      {% for order in results %}
+      <li>{{order.first_name}} </li>
+      {% endfor%}
     </ul>
 </body>
 </html>
