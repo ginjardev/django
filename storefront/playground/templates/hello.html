@@ -12,9 +12,9 @@
     <h1>Hello World!</h1>
     {% endif %}
     <ul>
-      {% for order in results %}
+      {{% for order in results %}
       <li>{{order.first_name}} </li>
-      {% endfor%}
+      {% endfor%}}
     </ul>
 </body>
 </html>
