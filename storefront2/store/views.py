@@ -11,7 +11,7 @@ from rest_framework import status
 
 @api_view()
 def product_list(request):
-    products = Product.objects.all()
+    products = Product.objects.select_related('collection').all()
     serializer = ProductSerializer(products, many=True) 
     return Response(serializer.data) 
 
