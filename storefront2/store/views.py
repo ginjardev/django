@@ -9,20 +9,29 @@ from .models import Product
 from rest_framework import status
 # Create your views here.
 
-@api_view()
+@api_view(['GET', 'POST'])
 def product_list(request):
-    products = Product.objects.select_related('collection').all()
-    serializer = ProductSerializer(products, many=True, context={'request': request}) 
-    return Response(serializer.data) 
+    if request.method == 'GET':
+        products = Product.objects.select_related('collection').all()
+        serializer = ProductSerializer(products, many=True, context={'request': request}) 
+        return Response(serializer.data) 
+    elif request.method == 'POST':
+        serializer = ProductSerializer(data= request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-@api_view()
+@api_view(['GET', 'PUT', 'DELETE'])
 def product_detail(request, id):
-    try:
-        product = Product.objects.get(pk=id)
+    product = Product.objects.get(pk=id) 
+    if request.method == 'GET':
         serializer = ProductSerializer(product)
         return Response(serializer.data)
-    except Product.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    elif request.method == 'PUT':
+        serializer = ProductSerializer(product, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 @api_view()
 def collection_detail(request, pk):  
