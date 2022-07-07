@@ -45,6 +45,14 @@ class ProductDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class CollectionList(APIView):
+    def get(self, request, id):
+        queryset = Collection.objects.annotate(products_count=Count('products')).all()
+        serializer = CollectionSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def 
+
 
 @api_view(['GET', 'POST'])
 def product_list(request):
