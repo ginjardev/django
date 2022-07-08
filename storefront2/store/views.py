@@ -46,12 +46,16 @@ class ProductDetail(APIView):
 
 
 class CollectionList(APIView):
-    def get(self, request, id):
+    def get(self, request):
         queryset = Collection.objects.annotate(products_count=Count('products')).all()
         serializer = CollectionSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def 
+    def post(self, request):
+        serializer = CollectionSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['GET', 'POST'])
@@ -94,6 +98,48 @@ def collection_list(request):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class CollectionDetail(APIView):
+    def get(self, request, id):
+        collection = get_object_or_404(
+        Collection.objects.annotate(
+            products_count = Count('products')
+        ), pk= id
+        )
+        serializer = CollectionSerializer(collection)
+        return Response(serializer.data)
+
+    def put(self, request, id):
+        collection = get_object_or_404(
+        Collection.objects.annotate(
+            products_count = Count('products')
+        ), pk= id
+        )
+        serializer = CollectionSerializer(collection, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
+    def delete(self, request, id):
+        collection = get_object_or_404(
+        Collection.objects.annotate(
+            products_count = Count('products')
+        ), pk= id
+        )
+
+        if collection.products.count() > 0:
+            return Response(
+                {"error": "collection can't be deleted because of more than one products"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+            )
+        collection.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+
+
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def collection_detail(request, pk):  
