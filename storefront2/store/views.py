@@ -22,13 +22,13 @@ class ProductViewSet(ModelViewSet):
         return {'request': self.request}
 
     lookup_field = 'id'
-    
-    def delete(self,request, id):
-        product = Product.objects.get(pk=id)
-        if product.orderitems.count() > 0:
+
+    def destroy(self, request, *args, **kwargs):
+        if OrderItem.objects.filter(product_id= kwargs['id']).count() > 0:
             return Response({'error', 'Product cannot delete because of order item'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
-        product.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        return super().destroy(request, *args, **kwargs)
+    
  
 
 class CollectionViewSet(ModelViewSet):
