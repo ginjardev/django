@@ -39,20 +39,17 @@ class CollectionViewSet(ModelViewSet):
         return {'request': self.request}
 
     lookup_field = 'id'
-    
-    def delete(self, request, id):
-        collection = get_object_or_404(
-        Collection.objects.annotate(
-            products_count = Count('products')
-        ), pk= id
-        )
 
-        if collection.products.count() > 0:
+    def destroy(self, request, *args, **kwargs):
+        if Collection.objects.annotate(
+            products_count = Count('products')
+        ).count() > 0:
             return Response(
                 {"error": "collection can't be deleted because of more than one products"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
             )
-        collection.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return super().destroy(request, *args, **kwargs)
+
+    
 
 
 
