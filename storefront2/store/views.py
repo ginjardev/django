@@ -1,11 +1,11 @@
-from math import prod
 from urllib import request, response
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpRequest, HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .serializers import CollectionSerializer, ProductSerializer
 from .models import *
 from django.db.models import Count
@@ -13,25 +13,15 @@ from rest_framework import status
 
 from store import serializers 
 # Create your views here.
-class ProductList(ListCreateAPIView): 
-    queryset = Product.objects.select_related('collection').all()
+
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
     def get_serializer_context(self):
         return {'request': self.request}
 
-
-class ProductDetail(APIView):
-    def get(self, request, id):
-        product = Product.objects.get(pk=id) 
-        serializer = ProductSerializer(product)
-        return Response(serializer.data)
-
-    def put(self, request, id):
-        serializer = ProductSerializer(data= request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    lookup_field = 'id'
     
     def delete(self,request, id):
         product = Product.objects.get(pk=id)
@@ -39,36 +29,16 @@ class ProductDetail(APIView):
             return Response({'error', 'Product cannot delete because of order item'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+ 
 
-
-class CollectionList(ListCreateAPIView):
+class CollectionViewSet(ModelViewSet):
     queryset = Collection.objects.annotate(products_count=Count('products')).all()
     serializer_class = CollectionSerializer
 
     def get_serializer_context(self):
         return {'request': self.request}
 
-
-class CollectionDetail(APIView):
-    def get(self, request, id):
-        collection = get_object_or_404(
-        Collection.objects.annotate(
-            products_count = Count('products')
-        ), pk= id
-        )
-        serializer = CollectionSerializer(collection)
-        return Response(serializer.data)
-
-    def put(self, request, id):
-        collection = get_object_or_404(
-        Collection.objects.annotate(
-            products_count = Count('products')
-        ), pk= id
-        )
-        serializer = CollectionSerializer(collection, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+    lookup_field = 'id'
     
     def delete(self, request, id):
         collection = get_object_or_404(
@@ -83,6 +53,8 @@ class CollectionDetail(APIView):
             )
         collection.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 
 
 # function-based views
