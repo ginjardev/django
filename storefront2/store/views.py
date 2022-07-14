@@ -50,9 +50,14 @@ class CollectionViewSet(ModelViewSet):
         return super().destroy(request, *args, **kwargs)
 
     
-class ReviewViewSet(ModelViewSet):
-    queryset = Review.objects.all()
+class ReviewViewSet(ModelViewSet):  
     serializer_class = ReviewSerializer
+
+    def get_queryset(self):
+        return Review.objects.filter(product_id=self.kwargs['product_id'])
+
+    def get_serializer_context(self):
+        return {'product_id': self.kwargs['product_id']}
 
 
 
