@@ -1,4 +1,5 @@
 from dataclasses import fields
+from pyexpat import model
 from rest_framework import serializers 
 from store.models import *
 from  decimal import Decimal 
@@ -21,3 +22,7 @@ class ProductSerializer(serializers.ModelSerializer):
         return product.unit_price * Decimal(1.1)
     
 
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['id', 'date', 'name', 'description', 'product']
